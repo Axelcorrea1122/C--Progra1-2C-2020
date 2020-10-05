@@ -1,7 +1,13 @@
 # depslib dependency file v1.0
-1600878753 source:d:\codeblocks\projects\tcp\prueba-fechas\main.cpp
+1601856158 source:d:\codeblocks\projects\tcp\prueba-fechas\main.cpp
 	<iostream>
-	"Fecha.h"
+	<fstream>
+	<Fecha.h>
+	<FechaException.h>
 
-1600877623 d:\codeblocks\projects\tcp\include\fecha.h
+1601853025 d:\codeblocks\projects\tcp\include\fecha.h
+	<iostream>
+
+1600891906 d:\codeblocks\projects\tcp\include\fechaexception.h
+	<string>
 

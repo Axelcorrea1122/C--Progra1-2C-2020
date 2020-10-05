@@ -1,27 +1,61 @@
 #include <iostream>
-#include "Fecha.h"
+#include <fstream>
+#include <Fecha.h>
+#include <FechaException.h>
 
 using namespace std;
 
-
-int main()
+#define ARG_TXT_SAL 1
+#define ERR_INGR_FECHA 1
+#define ARG_TXT_ENT 2
+int main(int argc, char* argv[])
 {
 
-    const Fecha f(12,9,2020);
+    filebuf fbSal;
+    fbSal.open(argv[ARG_TXT_SAL], ios::out);
+    ostream salida(&fbSal);
 
-    Fecha sum = f.sumarDias(30);
-    //Fecha sum = f + 30;
+    const Fecha f(12,1,2020);
 
-    int d, m , a;
+    int dias = 30;
+    Fecha sum = dias + f;
 
-    sum.getDMA(d,m,a);
+    cout<<f<<" + "<<dias<<" dias es:"<<sum<<endl;
+    salida << f << " + " << dias << " dias es:" << sum << endl;
+    Fecha f2(12,1,2021);
 
-    cout<<"La suma es:"<<d<<'/'<<m<<'/'<<a<<endl;
 
-    Fecha f2(12,9,2020);
+    cout << "Dif en dias: " << f2 - f << endl;
+    salida << "Dif en dias: "<< f2 - f <<endl;
 
-    //int dif = f.difEnDias(f2);
-    //int dif = f - f2; //Sobrecarga de operadores;
+    string sino;
+
+    if(f >= f2)
+        sino = "no";
+    cout<< f << sino << " es menor que " << f2 << endl;
+    salida << f << sino << " es menor que " << f2 << endl;
+
+
+    Fecha fIngr;
+
+    //cout<<"Ingrese una fecha (d/dm/a):"<<endl;
+
+    filebuf fbEnt;
+    fbEnt.open(argv[ARG_TXT_ENT], ios::in);
+    istream entrada(&fbEnt);
+
+
+    try
+    {
+        entrada >> fIngr;
+    }
+    catch(FechaException& ex)
+    {
+        cout << "Hubo un error en rl ingreso de la fecha" << ex.getMensaje() <<endl;
+        return ERR_INGR_FECHA;
+    }
+
+    cout<<"La fecha ingresada es: "<< fIngr << endl;
 
     return 0;
 }

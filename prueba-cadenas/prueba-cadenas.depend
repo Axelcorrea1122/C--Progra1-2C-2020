@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1601860760 source:d:\codeblocks\projects\tcp\prueba-cadenas\main.cpp
+	<iostream>
+	<Cadena.h>
+
+1601861123 d:\codeblocks\projects\tcp\include\cadena.h
+	<iostream>
+	<string.h>
+

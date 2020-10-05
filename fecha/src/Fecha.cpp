@@ -4,10 +4,10 @@
 
 
 const int Fecha::acumDias[][13] =
-    {
-        {0,0,31,59,90,120,151,181,212,243,273,304,334},
-        {0,0,31,60,91,121,152,182,213,244,274,305,335}
-    };
+{
+    {0,0,31,59,90,120,151,181,212,243,273,304,334},
+    {0,0,31,60,91,121,152,182,213,244,274,305,335}
+};
 
 
 Fecha::Fecha()
@@ -17,6 +17,12 @@ Fecha::Fecha()
 
 Fecha::Fecha(int dia, int mes, int anio)
 {
+    this->setDMA(dia,mes,anio);
+}
+
+void Fecha::setDMA(int dia, int mes, int anio)
+{
+
     if(!esFechaValida(dia, mes, anio))
         throw FechaException("La fecha es valida");
 
@@ -25,11 +31,15 @@ Fecha::Fecha(int dia, int mes, int anio)
     diaRel = diasAniosCompletos + diaDelAnio(dia, mes, anio);
 }
 
-void Fecha::sumarDias(int dias)
+
+Fecha& Fecha::operator +=(int dias)
 {
     this->diaRel += dias;
+
+    return *this;
 }
-Fecha Fecha::sumarDias(int dias) const
+
+Fecha Fecha::operator +(int dias) const
 {
     Fecha fSuma(*this); //constructor copia por defecto
     fSuma.diaRel += dias;
@@ -100,4 +110,50 @@ void Fecha::diaYMes(int diaDelAnio, int anio, int& dia, int& mes)
 
     mes--;
     dia = diaDelAnio-acumDias[filaAcum][mes];
+}
+
+int Fecha::operator -(const Fecha& f2) const
+{
+    return this->diaRel - f2.diaRel;
+}
+
+
+Fecha operator +(int dias, const Fecha& f)
+{
+    Fecha fSuma(f); //constructor copia por defecto
+    fSuma.diaRel += dias;
+
+    return fSuma;
+}
+
+bool Fecha::operator <(const Fecha& f2) const
+{
+    return this->diaRel < f2.diaRel;
+}
+
+ostream& operator <<(ostream& sal, const Fecha& f)
+{
+    int d,m,a;
+
+    f.getDMA(d,m,a);
+
+    sal<<d<<'/'<<m<<'/'<<a;
+    return sal;
+}
+
+bool Fecha::operator >=(const Fecha& f2) const
+{
+    return this->diaRel >=  f2.diaRel;
+}
+
+istream& operator >>(istream& ent, Fecha& f)
+{
+    int d,m,a;
+    char c;
+
+    ent >> d >> c >> m >> c >>a;
+
+    f.setDMA(d,m,a);
+
+    return ent;
 }
